@@ -1,33 +1,108 @@
+let score = 0;
+let count = 0;
 
-function game() {
-    let score = 0;
-    let count = 0;
+const gameArea = document.querySelector(".game");
+const rock = document.querySelector(".rock");
+const paper = document.querySelector(".paper");
+const scissors = document.querySelector(".scissors");
 
-    while (count<5) {
+rock.addEventListener('click', () => {
+    fadeIcon(".scissors");
+    fadeIcon(".paper");
 
-        showStartMessage(count, score);
-        let playerSelection = prompt("Rock, Paper, or Scissors?");
-        playerSelection = capitalizeChoice(playerSelection);
-        let computerSelection = getComputerChoice();
-        let result = playRound(playerSelection, computerSelection);
+    let playerSelection = "Rock";
 
-        if (result === true) {
-            console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
-            score++;
-            count++;
-        } else if (result === false) {
-            console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
-            // score--;
-            count++;
-        } else if (result === null) {
-            console.log('Tie! Replay the round');
-        } else {
-            console.log('Not an option. Try again: Rock, Paper, or Scissors?');
-        }
-    }
+    let computerSelection = getComputerChoice();
+    let result = playRound(playerSelection, computerSelection);
 
-    showWinner(count, score);    
- }
+    showRoundResult(result, playerSelection, computerSelection);
+    score = gameScore(result, score);
+    count = countRound(result, count);
+
+    let resetBtn = createResetBtn();
+        
+    
+    resetBtn.addEventListener('click', () => {
+        reset(".choice");
+        document.querySelector(".reset-container").removeChild(resetBtn);
+    });
+    
+});
+
+paper.addEventListener('click', () => {
+    fadeIcon(".scissors");
+    fadeIcon(".rock");
+
+    let playerSelection = "Paper";
+
+    let computerSelection = getComputerChoice();
+    let result = playRound(playerSelection, computerSelection);
+
+    showRoundResult(result, playerSelection, computerSelection);
+    score = gameScore(result, score);
+    count = countRound(result, count);
+
+    let resetBtn = createResetBtn();    
+    
+    resetBtn.addEventListener('click', () => {
+        reset(".choice");
+        document.querySelector(".reset-container").removeChild(resetBtn);
+    });
+    
+});
+
+scissors.addEventListener('click', () => {
+    fadeIcon(".paper");
+    fadeIcon(".rock");
+
+    let playerSelection = "Scissors";
+
+    let computerSelection = getComputerChoice();
+    let result = playRound(playerSelection, computerSelection);
+
+    showRoundResult(result, playerSelection, computerSelection);
+    score = gameScore(result, score);
+    count = countRound(result, count);
+
+    let resetBtn = createResetBtn();    
+    
+    resetBtn.addEventListener('click', () => {
+        reset(".choice");
+        document.querySelector(".reset-container").removeChild(resetBtn);
+    });
+    
+});
+
+
+// function game() {
+//     let score = 0;
+//     let count = 0;
+
+//     while (count<5) {
+
+//         showStartMessage(count, score);
+//         let playerSelection = prompt("Rock, Paper, or Scissors?");
+//         playerSelection = capitalizeChoice(playerSelection);
+//         let computerSelection = getComputerChoice();
+//         let result = playRound(playerSelection, computerSelection);
+
+//         if (result === true) {
+//             console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+//             score++;
+//             count++;
+//         } else if (result === false) {
+//             console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+//             // score--;
+//             count++;
+//         } else if (result === null) {
+//             console.log('Tie! Replay the round');
+//         } else {
+//             console.log('Not an option. Try again: Rock, Paper, or Scissors?');
+//         }
+//     }
+
+//     showWinner(count, score);    
+//  }
 
 function getComputerChoice() {
     const choices = ['Rock', 'Paper', 'Scissors'];
@@ -80,4 +155,56 @@ function playRound(playerSelection, computerSelection) {
     } else {
         console.log(`Game Over! \n You Lose! You: ${score} vs Computer: ${count-score}`)
     }
+ }
+
+ function fadeIcon(icon) {
+    let toFade = document.querySelector(icon);
+
+    toFade.style.opacity = 0.1;
+ }
+
+ function showRoundResult(result, playerSelection, computerSelection) {
+    if (result === true) {
+        console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+        // score++;
+        // count++;
+    } else if (result === false) {
+        console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+        // count++;
+    } else if (result === null) {
+        console.log('Tie! Replay the round');
+    } else {
+        console.log('Not an option. Try again: Rock, Paper, or Scissors?');
+    }
+ }
+
+ function gameScore(result, score) {
+    if (result === true) score++;
+    return score;
+ }
+
+ function countRound(result, count) {
+    if ((result === true) || (result === false)) {
+        count++;
+    }
+    return count;
+ }
+
+ function reset(icons) {
+    const toReset = document.querySelectorAll(icons);
+
+    toReset.forEach((icon) => {
+      icon.style.opacity = 1;
+    });
+ }
+
+ function createResetBtn() {
+    const resetContainer = document.querySelector(".reset-container");
+    const resetBtn = document.createElement('div');
+    resetBtn.classList.add("reset");
+    resetBtn.textContent = 'Click to Reset!';
+    resetBtn.setAttribute('style', 'font-size: 30px; font-weight: 500; border: 1px solid #000; padding:10px;');
+    resetContainer.appendChild(resetBtn);
+    
+    return resetBtn;
  }

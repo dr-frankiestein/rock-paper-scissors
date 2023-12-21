@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
+.game {
+    margin: auto;
+    font-family: Roboto, sans-serif;
+    padding: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.choice-container {
+    border: 1px solid #000; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    width: 1200px;
+
+}
+
+.choice {
+    /* border: 1px solid #000;  */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: auto; */
+    flex-shrink: 1;
+    /* flex-basis: auto; */
+    
+    min-width: 0;
+    
+}
+
+.choice img {
+    width: 150px;
+    height: 150px;
+}
+
+.scissors img {
+    width: 190px;
+    height: auto;
+}
+
+.result-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1200px;
+}
+
+.reset-container {
+    border: 1px solid #000; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+}
+
+.reset {
+    
+    font-size: 30px; 
+    font-weight: 500; 
+    padding:10px;
+}
+
+.reset.hide {
+    border: white;
+    color: white;
+}
+
+.reset.show {
+    border: 1px solid black;
+    color: black; 
+}
