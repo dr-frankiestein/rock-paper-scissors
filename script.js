@@ -1,12 +1,14 @@
 let score = 0;
 let count = 0;
 
-const gameArea = document.querySelector(".game");
+// const gameArea = document.querySelector(".game");
 const rock = document.querySelector(".rock");
 const paper = document.querySelector(".paper");
 const scissors = document.querySelector(".scissors");
 
 rock.addEventListener('click', () => {
+    reset()
+
     fadeIcon(".scissors");
     fadeIcon(".paper");
 
@@ -20,16 +22,16 @@ rock.addEventListener('click', () => {
     count = countRound(result, count);
 
     let resetBtn = createResetBtn();
-        
-    
+
     resetBtn.addEventListener('click', () => {
-        reset(".choice");
+        resetIcons(".choice");
         document.querySelector(".reset-container").removeChild(resetBtn);
     });
     
 });
 
 paper.addEventListener('click', () => {
+    reset()
     fadeIcon(".scissors");
     fadeIcon(".rock");
 
@@ -45,13 +47,14 @@ paper.addEventListener('click', () => {
     let resetBtn = createResetBtn();    
     
     resetBtn.addEventListener('click', () => {
-        reset(".choice");
+        resetIcons(".choice");
         document.querySelector(".reset-container").removeChild(resetBtn);
     });
     
 });
 
 scissors.addEventListener('click', () => {
+    reset()
     fadeIcon(".paper");
     fadeIcon(".rock");
 
@@ -67,7 +70,7 @@ scissors.addEventListener('click', () => {
     let resetBtn = createResetBtn();    
     
     resetBtn.addEventListener('click', () => {
-        reset(".choice");
+        resetIcons(".choice");
         document.querySelector(".reset-container").removeChild(resetBtn);
     });
     
@@ -190,13 +193,22 @@ function playRound(playerSelection, computerSelection) {
     return count;
  }
 
- function reset(icons) {
+ function resetIcons(icons) {
     const toReset = document.querySelectorAll(icons);
 
     toReset.forEach((icon) => {
       icon.style.opacity = 1;
     });
  }
+
+ function reset() {
+    if (document.querySelector(".reset") !== null) {
+        resetIcons(".choice");
+        let resetBtn = document.querySelector(".reset");
+        document.querySelector(".reset-container").removeChild(resetBtn);
+    }
+ }
+
 
  function createResetBtn() {
     const resetContainer = document.querySelector(".reset-container");
