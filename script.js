@@ -20,12 +20,18 @@ rock.addEventListener('click', () => {
     showRoundResult(result, playerSelection, computerSelection);
     score = gameScore(result, score);
     count = countRound(result, count);
+    showScore(score, count)
 
     let resetBtn = createResetBtn();
 
     resetBtn.addEventListener('click', () => {
         resetIcons(".choice");
         document.querySelector(".reset-container").removeChild(resetBtn);
+
+        const resultMessageContainer = document.querySelector(".result");
+        removeAllChildNodes(resultMessageContainer);
+
+        showRound(count);
     });
     
 });
@@ -43,12 +49,18 @@ paper.addEventListener('click', () => {
     showRoundResult(result, playerSelection, computerSelection);
     score = gameScore(result, score);
     count = countRound(result, count);
+    showScore(score, count)
 
     let resetBtn = createResetBtn();    
     
     resetBtn.addEventListener('click', () => {
         resetIcons(".choice");
         document.querySelector(".reset-container").removeChild(resetBtn);
+
+        const resultMessageContainer = document.querySelector(".result");
+        removeAllChildNodes(resultMessageContainer);
+
+        showRound(count);
     });
     
 });
@@ -66,12 +78,18 @@ scissors.addEventListener('click', () => {
     showRoundResult(result, playerSelection, computerSelection);
     score = gameScore(result, score);
     count = countRound(result, count);
+    showScore(score, count)
 
     let resetBtn = createResetBtn();    
     
     resetBtn.addEventListener('click', () => {
         resetIcons(".choice");
         document.querySelector(".reset-container").removeChild(resetBtn);
+
+        const resultMessageContainer = document.querySelector(".result");
+        removeAllChildNodes(resultMessageContainer);
+
+        showRound(count);
     });
     
 });
@@ -135,7 +153,6 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-
  function capitalizeChoice(playerSelection) {
     let lowSelection = playerSelection.toLowerCase();
     let firstLetter = lowSelection.charAt(0).toUpperCase();
@@ -143,20 +160,11 @@ function playRound(playerSelection, computerSelection) {
     return capitalizedSelection;
  }
 
-
  function showStartMessage(count, score) {
     if (count === 0) {
         console.log('New Game! Best out of 5. \n Round 1')
     } else {
         console.log(`Round ${count+1} \n Score: You ${score} vs Computer ${count-score}`);
-    }
- }
-
- function showWinner(count, score) {
-    if (score >= 3) {
-        console.log(`Game Over! \n You Win! You: ${score} vs Computer: ${count-score}`);
-    } else {
-        console.log(`Game Over! \n You Lose! You: ${score} vs Computer: ${count-score}`)
     }
  }
 
@@ -168,17 +176,26 @@ function playRound(playerSelection, computerSelection) {
 
  function showRoundResult(result, playerSelection, computerSelection) {
     if (result === true) {
-        console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+        resultString = `You got a point! ${playerSelection} beats ${computerSelection}`;
         // score++;
         // count++;
     } else if (result === false) {
-        console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+        resultString = `Bad Luck! ${computerSelection} beats ${playerSelection}`;
         // count++;
     } else if (result === null) {
-        console.log('Tie! Replay the round');
+        resultString = 'Tie! Replay the round';
     } else {
-        console.log('Not an option. Try again: Rock, Paper, or Scissors?');
+       resultString = 'Not an option. Try again: Rock, Paper, or Scissors?';
     }
+
+    let results = document.querySelector('.result');
+    const resultMessage = document.createElement('div');
+    resultMessage.textContent = resultString;
+    // resultMessage.style.textAlign = 'center';
+    resultMessage.setAttribute('style', 'text-align: center; padding: 20px; font-weight: 500; font-size: 25px;');
+    results.appendChild(resultMessage);
+
+
  }
 
  function gameScore(result, score) {
@@ -186,11 +203,49 @@ function playRound(playerSelection, computerSelection) {
     return score;
  }
 
+ function showScore(score, count) {
+    scoreString = `Player: ${score} Computer: ${count-score}`;
+
+    winString = `Game Over!
+                \r\n You Win: ${score} to ${count-score}`
+    loseString = `Game Over!
+                \r\n You Lose: ${score} to ${count-score}`
+    
+    let results = document.querySelector('.result');
+    const scoreMessage = document.createElement('div');
+
+    if (count === 5 && score >= 3) {
+        results.removeChild(results.firstChild)
+        scoreMessage.textContent = winString;
+    } else if (count === 5 && score < 3) {
+        results.removeChild(results.firstChild)
+        scoreMessage.textContent = loseString;
+    } else {
+        scoreMessage.textContent = scoreString;
+    }
+    // resultMessage.style.textAlign = 'center';
+    scoreMessage.setAttribute('style', 'text-align: center; padding: 20px; font-weight: 500; font-size: 25px; white-space: pre;');
+    // scoreMessage.setAttribute('style', 'white-space: pre;');
+    results.appendChild(scoreMessage);
+
+
+ }
+
  function countRound(result, count) {
     if ((result === true) || (result === false)) {
         count++;
     }
     return count;
+ }
+
+ function showRound(count) {
+    roundString = `Round ${count+1}!`;
+
+    let roundMessage = document.querySelector('.round');
+    
+    roundMessage.textContent = roundString;
+    // roundMessage.setAttribute('style', 'text-align: center; padding: 20px; font-weight: 500; font-size: 25px;');
+    // introMessage.appendChild(roundMessage);
  }
 
  function resetIcons(icons) {
@@ -207,7 +262,16 @@ function playRound(playerSelection, computerSelection) {
         let resetBtn = document.querySelector(".reset");
         document.querySelector(".reset-container").removeChild(resetBtn);
     }
+
+    const resultMessageContainer = document.querySelector(".result");
+    removeAllChildNodes(resultMessageContainer);
  }
+
+ function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
 
 
  function createResetBtn() {
@@ -220,3 +284,4 @@ function playRound(playerSelection, computerSelection) {
     
     return resetBtn;
  }
+
