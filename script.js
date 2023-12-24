@@ -1,7 +1,6 @@
 let score = 0;
 let count = 0;
 
-// const gameArea = document.querySelector(".game");
 const rock = document.querySelector(".rock");
 const paper = document.querySelector(".paper");
 const scissors = document.querySelector(".scissors");
@@ -95,36 +94,6 @@ scissors.addEventListener('click', () => {
 });
 
 
-// function game() {
-//     let score = 0;
-//     let count = 0;
-
-//     while (count<5) {
-
-//         showStartMessage(count, score);
-//         let playerSelection = prompt("Rock, Paper, or Scissors?");
-//         playerSelection = capitalizeChoice(playerSelection);
-//         let computerSelection = getComputerChoice();
-//         let result = playRound(playerSelection, computerSelection);
-
-//         if (result === true) {
-//             console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
-//             score++;
-//             count++;
-//         } else if (result === false) {
-//             console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
-//             // score--;
-//             count++;
-//         } else if (result === null) {
-//             console.log('Tie! Replay the round');
-//         } else {
-//             console.log('Not an option. Try again: Rock, Paper, or Scissors?');
-//         }
-//     }
-
-//     showWinner(count, score);    
-//  }
-
 function getComputerChoice() {
     const choices = ['Rock', 'Paper', 'Scissors'];
     return choices[oneTwoThree()];
@@ -177,11 +146,10 @@ function playRound(playerSelection, computerSelection) {
  function showRoundResult(result, playerSelection, computerSelection) {
     if (result === true) {
         resultString = `You got a point! ${playerSelection} beats ${computerSelection}`;
-        // score++;
-        // count++;
+
     } else if (result === false) {
         resultString = `Bad Luck! ${computerSelection} beats ${playerSelection}`;
-        // count++;
+
     } else if (result === null) {
         resultString = 'Tie! Replay the round';
     } else {
@@ -194,8 +162,6 @@ function playRound(playerSelection, computerSelection) {
     // resultMessage.style.textAlign = 'center';
     resultMessage.setAttribute('style', 'text-align: center; padding: 20px; font-weight: 500; font-size: 25px;');
     results.appendChild(resultMessage);
-
-
  }
 
  function gameScore(result, score) {
@@ -227,8 +193,6 @@ function playRound(playerSelection, computerSelection) {
     scoreMessage.setAttribute('style', 'text-align: center; padding: 20px; font-weight: 500; font-size: 25px; white-space: pre;');
     // scoreMessage.setAttribute('style', 'white-space: pre;');
     results.appendChild(scoreMessage);
-
-
  }
 
  function countRound(result, count) {
@@ -242,10 +206,7 @@ function playRound(playerSelection, computerSelection) {
     roundString = `Round ${count+1}!`;
 
     let roundMessage = document.querySelector('.round');
-    
     roundMessage.textContent = roundString;
-    // roundMessage.setAttribute('style', 'text-align: center; padding: 20px; font-weight: 500; font-size: 25px;');
-    // introMessage.appendChild(roundMessage);
  }
 
  function resetIcons(icons) {
